@@ -1,0 +1,243 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<link rel="stylesheet" href="src/css/smusic.css"/>
+<title>HTML5列表式音乐播放器</title>
+</head>
+<body>
+<div class="grid-music-container f-usn">
+    <div class="m-music-play-wrap">
+        <div class="u-cover"></div>
+        <div class="m-now-info">
+            <h1 class="u-music-title"><strong>标题</strong><small>歌手</small></h1>
+            <div class="m-now-controls">
+                <div class="u-control u-process">
+                    <span class="buffer-process"></span>
+                    <span class="current-process"></span>
+                </div>
+                <div class="u-control u-time">00:00/00:00</div>
+                <div class="u-control u-volume">
+                    <div class="volume-process" data-volume="0.50">
+                        <span class="volume-current"></span>
+                        <span class="volume-bar"></span>
+                        <span class="volume-event"></span>
+                    </div>
+                    <a class="volume-control"></a>
+                </div>
+            </div>
+            <div class="m-play-controls">
+                <a class="u-play-btn prev" title="上一曲"></a>
+                <a class="u-play-btn ctrl-play play" title="暂停"></a>
+                <a class="u-play-btn next" title="下一曲"></a>
+                <a class="u-play-btn mode mode-list current" title="列表循环"></a>
+                <a class="u-play-btn mode mode-random" title="随机播放"></a>
+                <a class="u-play-btn mode mode-single" title="单曲循环"></a>
+            </div>
+        </div>
+    </div>
+    <div class="f-cb">&nbsp;</div>
+    <div class="m-music-list-wrap"></div>
+</div>
+<script src="src/js/smusic.min.js"></script>
+<script>
+var musicList = [
+	{
+		title : '爱你',
+		singer : '王心凌',
+		cover  : 'images/wangxinling.jpg',
+		src    : 'http://music.163.com/song/media/outer/url?id=1474411443.mp3'
+	},
+	{
+		title : '花的嫁纱',
+		singer : '王心凌',
+		cover  : 'images/wangxinling.jpg',
+		src    : 'http://music.163.com/song/media/outer/url?id=1480378514.mp3'
+	},
+	{
+		title : '第一次爱的人',
+		singer : '王心凌',
+		cover  : 'images/wangxinling.jpg',
+		src    : 'http://music.163.com/song/media/outer/url?id=1953017440.mp3'
+	},
+	{
+		title : '睫毛弯弯',
+		singer : '王心凌',
+		cover  : 'images/wangxinling.jpg',
+		src    : 'http://music.163.com/song/media/outer/url?id=1480380026.mp3'
+	},
+	{
+		title : 'Honey',
+		singer : '王心凌',
+		cover  : 'images/wangxinling.jpg',
+		src    : 'http://music.163.com/song/media/outer/url?id=1474414193.mp3'
+	},
+	{
+		title : '我会好好的',
+		singer : '王心凌',
+		cover  : 'images/wangxinling.jpg',
+		src    : 'http://music.163.com/song/media/outer/url?id=1891384966.mp3'
+	},
+	{
+		title : '灰姑娘的眼泪',
+		singer : '王心凌',
+		cover  : 'images/wangxinling.jpg',
+		src    : 'mp3/gray-girl-eyes-water.mp3'
+	},
+	{
+		title : '彩虹的微笑',
+		singer : '王心凌',
+		cover  : 'images/wangxinling.jpg',
+		src    : 'http://music.163.com/song/media/outer/url?id=1956717123.mp3'
+	},
+	{
+		title : '爱的天灵灵',
+		singer : '王心凌',
+		cover  : 'images/wangxinling.jpg',
+		src    : 'mp3/love-air-zero-zero.mp3'
+	},
+	{
+		title : '大眠',
+		singer : '王心凌',
+		cover  : 'images/wangxinling.jpg',
+		src    : 'http://music.163.com/song/media/outer/url?id=1969494998.mp3'
+	},
+	{
+		title : '羽毛',
+		singer : '王心凌',
+		cover  : 'images/wangxinling.jpg',
+		src    : 'http://music.163.com/song/media/outer/url?id=1480380027.mp3'
+	},
+	{
+		title : '还是好朋友',
+		singer : '王心凌',
+		cover  : 'images/wangxinling.jpg',
+		src    : 'http://music.163.com/song/media/outer/url?id=1480380024.mp3'
+	},
+	{
+		title : '那年夏天宁静的海',
+		singer : '王心凌',
+		cover  : 'images/wangxinling.jpg',
+		src    : 'http://music.163.com/song/media/outer/url?id=1480378521.mp3'
+	},
+	{
+		title : 'Da Da Da',
+		singer : '王心凌',
+		cover  : 'images/wangxinling.jpg',
+		src    : 'mp3/dadada.mp3'
+	},
+	{
+		title : '梦的光点',
+		singer : '王心凌',
+		cover  : 'images/wangxinling.jpg',
+		src    : 'mp3/dream-light-dot.mp3'
+	},
+	{
+		title : '心电心',
+		singer : '王心凌',
+		cover  : 'images/wangxinling.jpg',
+		src    : 'mp3/heart-telegram-heart.mp3'
+	},
+	{
+		title : '远在眼前的你',
+		singer : '王心凌',
+		cover  : 'images/wangxinling.jpg',
+		src    : 'http://music.163.com/song/media/outer/url?id=36198045.mp3'
+	},
+	{
+		title : '孤独的嘉年华会',
+		singer : '王心凌',
+		cover  : 'images/wangxinling.jpg',
+		src    : 'http://music.163.com/song/media/outer/url?id=28840057.mp3'
+	},
+	{
+		title : '在青春迷失的咖啡馆',
+		singer : '王心凌',
+		cover  : 'images/wangxinling.jpg',
+		src    : 'http://music.163.com/song/media/outer/url?id=1327256122.mp3'
+	},
+	{
+		title : 'BFF',
+		singer : '王心凌',
+		cover  : 'images/wangxinling.jpg',
+		src    : 'http://music.163.com/song/media/outer/url?id=37853979.mp3'
+	},
+	{
+		title : '月光',
+		singer : '王心凌',
+		cover  : 'images/wangxinling.jpg',
+		src    : 'http://music.163.com/song/media/outer/url?id=1474411442.mp3'
+	},
+	{
+		title : '水仙',
+		singer : '王心凌',
+		cover  : 'images/wangxinling.jpg',
+		src    : 'mp3/water-fairy.mp3'
+	},
+	{
+		title : '日落前七分钟',
+		singer : '王心凌',
+		cover  : 'images/wangxinling.jpg',
+		src    : 'mp3/sunset-before-7-minute.mp3'
+	},
+	{
+		title : 'WooSa WooSa',
+		singer : '王心凌',
+		cover  : 'images/wangxinling.jpg',
+		src    : 'mp3/WooSa-WooSa.mp3'
+	},
+	{
+		title : '忘了我也不错',
+		singer : '王心凌',
+		cover  : 'images/wangxinling.jpg',
+		src    : 'http://music.163.com/song/media/outer/url?id=22854067.mp3'
+	},
+	{
+		title : '当你',
+		singer : '王心凌',
+		cover  : 'images/wangxinling.jpg',
+		src    : 'http://music.163.com/song/media/outer/url?id=1480380031.mp3'
+	},
+	{
+		title : '变成陌生人',
+		singer : '王心凌',
+		cover  : 'images/wangxinling.jpg',
+		src    : 'mp3/become-stranger.mp3'
+	},
+	{
+		title : '想你想你',
+		singer : '王心凌',
+		cover  : 'images/wangxinling.jpg',
+		src    : 'mp3/miss-you-miss-you.mp3'
+	},
+	{
+		title : '爱呢',
+		singer : '王心凌',
+		cover  : 'images/wangxinling.jpg',
+		src    : 'http://music.163.com/song/media/outer/url?id=28840054.mp3'
+	},
+	{
+		title : '明天见',
+		singer : '王心凌',
+		cover  : 'images/wangxinling.jpg',
+		src    : 'http://music.163.com/song/media/outer/url?id=1480378518.mp3'
+	},
+	{
+		title : '一个人的日子',
+		singer : '王心凌',
+		cover  : 'images/wangxinling.jpg',
+		src    : 'http://music.163.com/song/media/outer/url?id=37856940.mp3'
+	}
+];
+new SMusic({
+	musicList:musicList
+});
+</script>
+
+<div style="display:none;text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';">
+<p>来源：<a href="https://free.3v.do/" target="_blank">免费空间</a></p>
+</div>
+</body>
+</html>
